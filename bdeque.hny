@@ -1,0 +1,41 @@
+def Bdeque(n) returns bdeque: 
+    bdeque = {
+        .bdeque: [None,] * (n + 1), .size: n + 1, 
+        .left: 0, .right: 0
+    }
+
+def put_left(bd, v): 
+
+    atomically when (((bd -> right - bd -> left) + bd -> size) % bd -> size) != (bd -> size - 1):
+        bd -> left = ((bd -> left  - 1) + bd -> size) % bd -> size
+        bd -> bdeque[bd -> left] = v
+        
+def put_right(bd, v): 
+
+    atomically when (((bd -> right - bd -> left) + bd -> size) % bd -> size) != (bd -> size - 1): 
+        bd -> bdeque[bd -> right] = v
+        bd -> right = (bd -> right + 1) % bd -> size
+
+def get_left(bd) returns next: 
+
+    atomically when bd -> right != bd -> left: 
+        next = bd -> bdeque[bd -> left]
+        bd -> bdeque[bd -> left] = None
+        bd -> left = (bd -> left  + 1) % bd -> size
+
+def get_right(bd) returns prev: 
+
+    atomically when bd -> right != bd -> left: 
+        bd -> right = ((bd -> right - 1) + bd -> size) % bd -> size
+        prev = bd -> bdeque[bd -> right]
+        bd -> bdeque[bd -> right] = None
+
+def peek_left(bd) returns next:
+
+    atomically when bd -> right != bd -> left: 
+        next = bd -> bdeque[bd -> left]
+
+def peek_right(bd) returns prev: 
+
+    atomically when bd -> right != bd -> left: 
+        prev = bd -> bdeque[((bd -> right - 1) + bd -> size) % bd -> size]

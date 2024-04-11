@@ -1,0 +1,59 @@
+import bdeque
+
+SIZE = 2
+N_PUT_RIGHT = 2
+N_PUT_LEFT = 1
+N_GET_LEFT = 1
+N_GET_RIGHT = 1
+N_PEEK_LEFT = 0
+N_PEEK_RIGHT = 1
+
+bd = bdeque.Bdeque(SIZE)
+
+def put_left_test(self): 
+    print("call put left", self)
+    bdeque.put_left(?bd, (self, "left"))
+    print("done put left", self)
+
+def put_right_test(self): 
+    print("call put right", self)
+    bdeque.put_right(?bd, (self, "right"))
+    print("done put right", self)
+
+def get_left_test(self):
+    print("call get left", self)
+    let l = bdeque.get_left(?bd):
+        print("done get left", self, l)
+
+def get_right_test(self):
+    print("call get right", self)
+    let r = bdeque.get_right(?bd):
+        print("done get right", self, r)
+
+def peek_left_test(self):
+    print("call peek left", self)
+    let l = bdeque.peek_left(?bd):
+        print("done peek left", self, l)
+
+def peek_right_test(self):
+    print("call peek right", self)
+    let r = bdeque.peek_right(?bd):
+        print("done peek right", self, r)
+
+for i in {1..N_PUT_LEFT}:
+    spawn put_left_test(i)
+
+for i in {1..N_PUT_RIGHT}:
+    spawn put_right_test(i)
+
+for i in {1..N_GET_LEFT}:
+    spawn get_left_test(i)
+
+for i in {1..N_GET_RIGHT}:
+    spawn get_right_test(i)
+
+for i in {1..N_PEEK_LEFT}:
+    spawn peek_left_test(i)
+
+for i in {1..N_PEEK_RIGHT}:
+    spawn peek_right_test(i)
