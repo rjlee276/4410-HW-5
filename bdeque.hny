@@ -4,38 +4,38 @@ def Bdeque(n) returns bdeque:
         .left: 0, .right: 0
     }
 
-def put_left(bd, v): 
+def put_left(d, v): 
 
-    atomically when (((bd -> right - bd -> left) + bd -> size) % bd -> size) != (bd -> size - 1):
-        bd -> left = ((bd -> left  - 1) + bd -> size) % bd -> size
-        bd -> bdeque[bd -> left] = v
+    atomically when (((d -> right - d -> left) + d -> size) % d -> size) != (d -> size - 1):
+        d -> left = ((d -> left  - 1) + d -> size) % d -> size
+        d -> bdeque[d -> left] = v
         
-def put_right(bd, v): 
+def put_right(d, v): 
 
-    atomically when (((bd -> right - bd -> left) + bd -> size) % bd -> size) != (bd -> size - 1): 
-        bd -> bdeque[bd -> right] = v
-        bd -> right = (bd -> right + 1) % bd -> size
+    atomically when (((d -> right - d -> left) + d -> size) % d -> size) != (d -> size - 1): 
+        d -> bdeque[d -> right] = v
+        d -> right = (d -> right + 1) % d -> size
 
-def get_left(bd) returns next: 
+def get_left(d) returns next: 
 
-    atomically when bd -> right != bd -> left: 
-        next = bd -> bdeque[bd -> left]
-        bd -> bdeque[bd -> left] = None
-        bd -> left = (bd -> left  + 1) % bd -> size
+    atomically when d -> right != d -> left: 
+        next = d -> bdeque[d -> left]
+        d -> bdeque[d -> left] = None
+        d -> left = (d -> left  + 1) % d -> size
 
-def get_right(bd) returns prev: 
+def get_right(d) returns prev: 
 
-    atomically when bd -> right != bd -> left: 
-        bd -> right = ((bd -> right - 1) + bd -> size) % bd -> size
-        prev = bd -> bdeque[bd -> right]
-        bd -> bdeque[bd -> right] = None
+    atomically when d -> right != d -> left: 
+        d -> right = ((d -> right - 1) + d -> size) % d -> size
+        prev = d -> bdeque[d -> right]
+        d -> bdeque[d -> right] = None
 
-def peek_left(bd) returns next:
+def peek_left(d) returns next:
 
-    atomically when bd -> right != bd -> left: 
-        next = bd -> bdeque[bd -> left]
+    atomically when d -> right != d -> left: 
+        next = d -> bdeque[d -> left]
 
-def peek_right(bd) returns prev: 
+def peek_right(d) returns prev: 
 
-    atomically when bd -> right != bd -> left: 
-        prev = bd -> bdeque[((bd -> right - 1) + bd -> size) % bd -> size]
+    atomically when d -> right != d -> left: 
+          prev = d -> bdeque[((d -> right - 1) + d -> size) % d -> size]
