@@ -1,4 +1,4 @@
-from synch import Lock, acquire, release, Condition, wait, notify
+from synch import Lock, acquire, release, Condition, wait, notify, notifyAll
 
 def Bdeque(n) returns bdeque: 
 
@@ -46,7 +46,7 @@ def put_left(d, v):
     d -> left = ((d -> left  - 1) + d -> size) % d -> size
     d -> bdeque[d -> left] = v
 
-    notify(?d -> nempty)
+    notifyAll(?d -> nempty)
     release(?d -> lock)
 
 def put_right(d, v): 
@@ -58,7 +58,7 @@ def put_right(d, v):
     d -> bdeque[d -> right] = v
     d -> right = (d -> right + 1) % d -> size
     
-    notify(?d -> nempty)
+    notifyAll(?d -> nempty)
     release(?d -> lock)
 
 #wait condition is waiting until buffer isn't empty
